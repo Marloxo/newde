@@ -19,10 +19,16 @@ environment:
 branches:
   only:
     - master
+nuget:
+  account_feed: true
+  project_feed: true
+
+before_build:
+  - nuget restore
 
 install:
 - ps: choco install wget
-
+- ps: appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 build:
   verbosity: minimal
 
