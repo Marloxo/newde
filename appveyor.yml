@@ -1,0 +1,31 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 1.0.{build}
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# environment variables
+environment:
+  GithubEmail: marloo-_-@hotmail.com
+  GithubUsername: Marloxo
+  GithubPersonalAccessToken:
+    secure: cYD/gO+RS/vWt98jglOTMV4usE5j/cz6UeZ3u5z0yYXt401fWTNjBFqdZ/HQXB0c    
+
+branches:
+  only:
+    - master
+
+install:
+- ps: choco install wget
+
+build:
+  verbosity: minimal
+
+after_test:
+- ps: ./makeStatic.ps1 $env:APPVEYOR_BUILD_FOLDER
+- ps: ./pushStatic.ps1 $env:APPVEYOR_BUILD_FOLDER $env:GithubEmail $env:GithubUsername $env:GithubPersonalAccessToken
